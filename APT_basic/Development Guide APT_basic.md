@@ -24,9 +24,9 @@ Containing the data of factors and returns, the class is used to **calculate the
 
 | Name            | Introduce                                                   | Eg.                                     |
 | --------------- | ----------------------------------------------------------- | --------------------------------------- |
-| self.DataSet    | a list of DataFrame about the data of factors of each asset | [df1,df2,df3] (multi-dimension for dfs) |
-| self.Return     | a list of DataFrame about the return of each asset          | [df1,df2,df3] (1-dimension for dfs)     |
-| self.RiskExpose | a array of risk-expose of each asset                        | array([1 1 1] [2 2 2])                  |
+| `self.DataSet`    | a list of DataFrame about the data of factors of each asset | [df1,df2,df3] (multi-dimension for dfs) |
+| `self.Return`     | a list of DataFrame about the return of each asset          | [df1,df2,df3] (1-dimension for dfs)     |
+| `self.RiskExpose` | a array of risk-expose of each asset                        | array([1 1 1] [2 2 2])                  |
 
 
 
