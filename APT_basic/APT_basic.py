@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[3]:
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,12 +6,6 @@ from sklearn.linear_model import LinearRegression
 from rqdatac import get_price,init,get_factor
 import rqdatac
 import statsmodels.api as sm
-
-
-# In[16]:
-
-
-
 class MyProtfolio:
     '''
     Readme:
@@ -220,10 +208,6 @@ class MyProtfolio:
             for j in range(self.num_factor()):
                 self.RiskExpose[i][j]=W[j]
 
-
-# In[17]:
-
-
 '''
 It's a demo
 '''
@@ -250,16 +234,4 @@ MyDemo=MyProtfolio(len(AssetList),AssetList,Factor,Return,'20180202','20190202')
 MyDemo.RetainImpt(method,NumImpt)
 MyDemo.CalRiskExpose()
 MyDemo.MyDescribe()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
