@@ -12,7 +12,7 @@
 
 ​	[4.1.Portfolio](#Portfolio)
 
-​	[4.2.DataClean](#SingleDataClean & other functions in DataClean.py)
+​	[4.2.DataClean](#SingleDataClean&other_functions_in_DataClean)
 
 ​	[4.3.RetainImpt](#RetainImptDA)
 
@@ -90,7 +90,7 @@ Intro of the functions:
 
 
 
-### SingleDataClean & other functions in DataClean.py
+### SingleDataClean&other_functions_in_DataClean
 
 The SingleDataClean class performs data cleansing on incoming data, such as data normalization, removal of extreme values, resampling, and so on, and returns processed data along with retained labels. Other functions in the file realize other data cleaning functions. For example, according to the list for storing labels obtained after the filtering operation, the volume data as weight data is summed up according to the corresponding interval in the label list.  
 
