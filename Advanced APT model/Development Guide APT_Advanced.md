@@ -4,11 +4,11 @@
 
 [1.Introduce](#Introduce)
 
-[2.Design Thinking](#Design Thinking)
+[2.Design Thinking](#Design_Thinking)
 
-[3.Data Flow Diagram](#Data Flow Diagram)
+[3.Data Flow Diagram](#Data_Flow_Diagram)
 
-[4.Classes and Functions](#Classes and Functions)
+[4.Classes and Functions](#Classes_and_Functions)
 
 ​	[4.1.Portfolio](#Portfolio)
 
@@ -26,22 +26,22 @@ Hi！This is APT_Advanced, wish you can enjoy it!
 
 APT model is one of the most commonly used quantitative investment models. Its main function is to extract the optimal value factor from the massive stock information based on statistics and econometrics and obtain the optimal asset portfolio. This model can meet the needs of most sell-side institutions.  
 
-## Design Thinking
+## Design_Thinking
 
 Our design of the entire system is based on the concept of the processor, and we treat data as a stream passing between processor objects. We perform different functions in different processors and make the necessary Settings every time we call the processor.  
 
 We have five classes: MyPortfolle. py, which holds stock and Portfolio information, dataclelean, which cleans data. The Optimizer class in optimalweight. py is responsible for solving the optimal asset portfolio, and the RetainImptDA class in RetainImpt. And TestFrameWork classes in the backtesting.py file used to test portfolio performance.  
 
-## Data Flow Diagram
+## Data_Flow_Diagram
 
 - For convenience, our data types are only List and DataFrame.  
 - We note the data flow and the processors in the diagram.
 
 Our data flow chart is as follows:  
 
-![dfd](E:\大三下\量化金融\APT_Model_Project\asset\dfd.png)
+![dfd](.\asset\dfd.png)
 
-## Classes and Functions
+## Classes_and_Functions
 
 ### Portfolio
 
