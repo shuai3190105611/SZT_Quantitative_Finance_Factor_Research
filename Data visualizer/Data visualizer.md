@@ -188,7 +188,7 @@ The main function of this function is to draw a curve of a single factor. Why do
 
 Example:
 
-````python
+```python
 Demo_v.single('Open','Date')
 ```
 
