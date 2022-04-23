@@ -188,10 +188,12 @@ The main function of this function is to draw a curve of a single factor. Why do
 
 Example:
 
-```python
+````python
 Demo_v.single('Open','Date')
-```
 
+````
+
+```
 #### `Multi`
 
 ```python
@@ -255,6 +257,60 @@ The purpose of this function is to calculate the correlation between factors and
 ```python
 Demo_v.cor_total_plot()
 ```
+
+#### `show_stat`
+
+```python
+def show_stat(self,FactorList):
+        '''
+        Function:
+        To show the statistic features of the factors
+        Input:
+        (list)FactorList:the list of factors
+        Output: the pictures
+        '''
+```
+
+Function:
+
+Although the use of statistical graphs can help us to get a good sense of the data, we still need to make a visual representation of the statistics. In this function, we want to use a bar graph to show the maximum, minimum, and average values of each factor in the passed list.  
+
+尽管使用统计图的方式可以帮助我们对数据有个很好的直观感受，但是我们仍然需要对统计量做出直观的表示。在这个函数中，我们希望使用条形图展现传入的列表中各个因子的最大值、最小值、平均值。
+
+Example:
+
+```python
+Demo_v.show_stat(FactorList)
+```
+
+#### `subline`
+
+```python
+    def subline(self,Factor1,Factor2,label):
+        '''
+        Function: show the marginal of two factors and draw the graph
+        Input:
+        (string)Factor1: name of the first factor
+        (string)Factor2: name of the second factor
+        (string)label: the x label of the data
+        Output:
+        pictures
+        '''
+```
+
+Function:
+
+The function of this function is to reflect the dynamic relationship between the differences of two sequences. Usually used to reflect the difference between a sequence and a reference sequence. For example, we often input the return rate of the portfolio together with the return rate of the benchmark portfolio (such as Shanghai Composite Index) to observe the performance of the strategy when we test back the portfolio.  
+
+这个函数的功能是反映两个序列的差值的动态变化关系。通常情况下，常用于反映某一序列和基准序列的差值。例如，我们常常在回测投资组合的时候，将投资组合收益率和基准组合（例如上证指数）的收益率一起输入，观察策略表现情况。
+
+Example：
+
+```python
+Demo_v.subline('Open','High','Date')
+```
+
+
 
 ## Demo data we use
 
@@ -342,3 +398,27 @@ figure 5: result of function `heatmap`
 Analysis:
 
 根据我们在科研中遇到各个奇怪算法中积累的经验，我们可以把前面几种关系紧密的因子合并在一起作为一个因子，来看这个合成因子和其他因子的关系。我们观察交易量volume，价格和交易量存在较弱的负相关性。两者看似不想关，但是仔细思考，价格越高，消费者越不倾向于购买，因为价格高往往会导致较低的流动性，并且由于资金有限，单个资产价格越高，越不容易配置出有效率的、风险对冲过的资产组合。所以这可能导致交易量和价格存在弱负相关。具体是怎样的机制，还需要我们进行进一步的检验。
+
+#### Demo 5: `show_stat`
+
+motivation:
+
+我们只是为了直观反映出因子的统计特征，因此用条形图的方式来呈现。
+
+![show_stat](.\asset\show_stat.jpg)
+
+figure 6: result of function `show_stat`
+
+#### Demo 6: `subline`
+
+motivation：
+
+正如上文所说，我们经常遇到这样的场景：评估两个序列的好坏，具体而言，就算评估谁的值大或者稳定，等等。因此我们需要对两个序列做差，并将之与原序列比较，来给我们下一步的分析做出直观的支持。
+
+![margin of Open High](.\asset\margin of Open High.jpg)
+
+figure 7: result of function `subline`
+
+Analysis：
+
+从图中可以看到，开盘价和最高价的价差并不大。在开始的时候由于序列整体处于波动状态，两者价差也较大。在中间较为稳定的区间，几乎为0.在之后缓慢上升的区间，两者则具有较为略微的差距。
