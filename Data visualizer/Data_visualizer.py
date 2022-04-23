@@ -184,6 +184,7 @@ class visualizer:
         plt.title('Heat map for '+ Name)
         plt.savefig('.\\'+Name+' heat map'+'.jpg')
         plt.show()
+        plt.clf()
     def cor_total_plot(self):
         #calculate a matrix and then plot
         #first we calculate the cor
@@ -238,7 +239,7 @@ class visualizer:
             plt.ylabel(Factor)
             plt.xlabel("time")
             plt.legend()
-            plt.savefig('.\\single.jpg')
+            plt.savefig('.\\single: '+Factor+'.jpg')
             plt.show()
     def check_in(self,FactorList):
         flag=1
@@ -292,11 +293,142 @@ class visualizer:
                        ,marker = "+",markersize = 4,color= (0.5, 0.9*i/len(FactorList), 0.5),alpha = 0.5
                        ,label=FactorList[i]
                        )
+                
             plt.title("Multi")
             plt.ylabel("Factors")
             plt.xlabel("time")
             plt.legend()
             plt.savefig('.\\Multi.jpg')     
+            plt.show()
+    def show_stat(self,FactorList):
+        '''
+        Function:
+        To show the statistic features of the factors
+        Input:
+        (list)FactorList:the list of factors
+        Output: the pictures
+        '''
+        flag=self.check_in(FactorList)
+        if flag==0:
+            print("Error! Factors not valid!")
+        else:
+            #set the label
+            selected_label=self.select_label()
+            sub_dataset=self.dataset.loc[selected_label]
+            row,col=self.get_shape()
+            #generate the new df about the
+            col_list=['max','min','avg','factor']
+            stat_df=pd.DataFrame(columns=col_list)
+            for i in FactorList:
+                stat_df.loc[i]=[ self.dataset[i].max()
+                                ,self.dataset[i].min()
+                                ,self.dataset[i].mean()
+                                ,i
+                               ]
+            
+            #use the melt operations
+            print("Description:")
+            print(stat_df.describe())
+            stat_df=stat_df.melt(id_vars=['factor'])
+            #print(stat_df)
+            plt.style.use('seaborn-darkgrid')
+            #value: the value of the stats of factors, variable: the names of the melted ,eg.max min avg
+            #factor: the name of the factors
+            #ci to set the error,sd:default:95%
+            #set to note the style of the color
+            sns.barplot(x="factor",y="value",data=stat_df,hue="variable",ci="sd",capsize=.2,palette="Set3")
+            
+            
+            
+            
+            plt.title("stats")
+            plt.ylabel("values")
+            plt.xlabel("Factors")
+            plt.legend()
+            plt.savefig('.\\show_stat.jpg')     
+            plt.show()     
+            plt.clf()
+    def subline(self,Factor1,Factor2,label):
+        '''
+        Function: show the marginal of two factors and draw the graph
+        Input:
+        (string)Factor1: name of the first factor
+        (string)Factor2: name of the second factor
+        (string)label: the x label of the data
+        Output:
+        pictures
+        '''
+        # Use two factors in the dataset
+        #check the correctness
+        if Factor1 not in self.dataset.columns or Factor2 not in self.dataset.columns or label not in self.dataset.columns:
+            print("Error! Factors not valid!")
+        else:
+            #set the label
+            selected_label=self.select_label()
+            sub_dataset=self.dataset.loc[selected_label]
+            #set the limitations of the variables
+            row,col=self.get_shape()
+            max_y=max(sub_dataset[Factor1].max(),sub_dataset[Factor2].max())
+            min_y=min(sub_dataset[Factor1].min(),sub_dataset[Factor2].min())
+            s1=np.array(sub_dataset[Factor1])
+            s2=np.array(sub_dataset[Factor2])
+            s_sub=(s1-s2)
+            print(s_sub)
+            #t=np.array(sub_dataset[label])
+            # transform to the time type
+            t = np.array([datetime.datetime.strptime(d,"%Y-%m-%d").date()
+                     for d in sub_dataset[label]])
+            
+            plt.style.use('seaborn-darkgrid')
+            fig, axs = plt.subplots(2, 1)
+            
+            # we sub 1 to avoid the case: the last tuple is (2020-xx-xx,xx,xx) and the value is 0
+            
+            #remenber to add label="xxx"
+            
+            
+            axs[0].plot(t[:len(t)-1], s1[:len(t)-1]
+                       #,color='green', marker='o', linestyle='dashed',linewidth=2, markersize=12#these are settings
+                       ,marker = "+",markersize = 4,color= "green",alpha = 0.5
+                       ,label=Factor1
+                       )
+            axs[0].plot(t[:len(t)-1], s2[:len(t)-1]
+                       #,color='green', marker='o', linestyle='dashed',linewidth=2, markersize=12#these are settings
+                       ,marker = "+",markersize = 4,color= "red",alpha = 0.5
+                       ,label=Factor2
+                       )
+            axs[0].plot(t[:len(t)-1], s_sub[:len(t)-1]
+                       #,color='green', marker='o', linestyle='dashed',linewidth=2, markersize=12#these are settings
+                       ,marker = "+",markersize = 4,color= "blue",alpha = 0.5
+                       ,label='margin'
+                       )
+            plt.figure(figsize=(12, 5))
+            axs[0].legend()
+            #set_xlim is not needed
+            axs[0].set_xlim(t[0], t[int(min(self.config.loc['max_point_num',Factor1],self.config.loc['max_point_num',Factor2]))-2])
+            axs[0].set_ylim(-max_y, max_y)
+            
+            #set the labels
+            axs[0].set_xlabel(label)
+            axs[0].set_ylabel(Factor1+' and '+Factor2)
+            axs[0].grid(True)
+            #for the margin
+            axs[1].plot(t[:len(t)-1], s_sub[:len(t)-1]
+                       #,color='green', marker='o', linestyle='dashed',linewidth=2, markersize=12#these are settings
+                       ,marker = "+",markersize = 4,color= "blue",alpha = 0.5
+                       ,label='margin'
+                       )
+            plt.figure(figsize=(12, 5))
+            axs[1].legend()
+            axs[1].set_xlim(t[0], t[int(min(self.config.loc['max_point_num',Factor1],self.config.loc['max_point_num',Factor2]))-2])
+            axs[1].set_ylim(-max_y, max_y)
+            
+            #set the labels
+            axs[1].set_xlabel(label)
+            axs[1].set_ylabel('margin')
+            axs[1].grid(True)
+            fig.savefig('.\\margin of '+Factor1+' '+Factor2+'.jpg')
+            
             plt.show()
 #Demo mainly process data and some operations on it
 df=pd.read_csv("ADANIPORTS.csv")
@@ -308,3 +440,5 @@ Demo_v.single('Open','Date')
 FactorList=['Open','Close','High','Low']
 Demo_v.multi(FactorList,'Date')
 Demo_v.cor_total_plot()
+Demo_v.show_stat(FactorList)
+Demo_v.subline('Open','High','Date')
